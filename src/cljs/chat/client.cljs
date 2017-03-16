@@ -1,20 +1,15 @@
-(ns websocket-chat.client
-  (:require [domina.core :refer [append!
-                                 by-class
+(ns chat.client
+  (:require [domina.core :refer [
                                  by-id
                                  set-value!
                                  destroy!
-                                 prepend!
-                                 append!
-                                 value
-                                 attr]]
-            [domina.events :refer [listen! prevent-default]]
-            [hiccups.runtime])
-
-(:require-macros [hiccups.core :refer [html]]))
+                                 value]]
+            [domina.events :refer [listen!]]
+            ))
 
 (def ws (js/WebSocket. "ws://localhost:3000/ws"))
 
+;aset => set property. (set! (.-property obj) value)
 (aset ws "onerror" (fn [](.log js/console  "error")))
 (aset ws "onopen" (fn [e] (.log js/console "websocket open!") ))
 (aset ws "onclose" (fn [e] (.log js/console "Error occurred")))
