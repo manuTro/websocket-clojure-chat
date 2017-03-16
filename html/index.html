@@ -3,20 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>chartroom, http-kit's websocket demo</title>
+    <title>chartroom</title>
     <!-- <link href="chartroom.css" rel="stylesheet" type="text/css" /> -->
   </head>
   <body>
     <div id="page-wrap">
-      <h1>chartroom, http-kit's websocket demo</h1>
+      <h1>Chartroom</h1>
+    </div>
+      <div class="">
+        <input id="name" value="anonymous"/>
+        <input id="mess" placeholder="type something and press enter"/>
+      </div>
+
+      <div class="">
+        <input type="button" value="send" id="send"/>
+      </div>
+
       <div id="history-wrap">
         <ul id="history"></ul>
       </div>
-      <input id="name" value="anonymous"/>
-      <input id="mess" placeholder="type something and press enter"/>
-      <input type="button" value="send" id="send"/>
 
-    </div>
 
     <script src="main.js"></script>
     <script> chat.client.init();</script>
