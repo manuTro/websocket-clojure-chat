@@ -21,7 +21,9 @@
                  [compojure "1.5.2"]
                  [com.taoensso/timbre "4.8.0"]
                  [ring/ring-defaults "0.2.1"]
-                 [org.clojure/tools.logging "0.3.1"]               ;; for routing
+                 [org.clojure/tools.logging "0.3.1"]
+                 [com.cognitect/transit-cljs "0.8.239"]
+                 [org.clojure/data.json "0.2.6"]              ;; for routing
                 ;  [org.clojars.magomimmo/shoreleave-remote-ring "0.3.3"]
                 ;  [org.clojars.magomimmo/shoreleave-remote "0.3.1"]
                  ])
@@ -37,7 +39,7 @@
     (comp
      (serve :handler 'server/all-routes             ;; ring hanlder
             :resource-root "target"
-            :httpkit true                    
+            :httpkit true
             :reload true)                                ;; reload ns
      (watch)
      (reload)

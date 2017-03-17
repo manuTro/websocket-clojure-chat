@@ -6,6 +6,7 @@
             [org.httpkit.timer :as tim]
             [taoensso.timbre :as timbre]
             [clojure.edn :as edn]
+            [clojure.data.json :refer [json-str read-json]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 
 
@@ -29,12 +30,21 @@
 ;                                                     (println "data received: " name "and " message)) ;; echo it back
 ;                           (send! channel data)))))
 
+; (defn handler [request]
+;  (with-channel request channel
+;                (connect! channel)
+;               (on-close channel (fn [status] (println "channel closed: " status)))
+;                (on-receive channel(fn [data]  (doseq [chan @channels]
+;                                                       (println data)
+;                                                       (send! chan data))))))
 (defn handler [request]
  (with-channel request channel
                (connect! channel)
               (on-close channel (fn [status] (println "channel closed: " status)))
                (on-receive channel(fn [data]  (doseq [chan @channels]
-                                                      (send! chan data))))))
+                                                      (println data)
+                                                      (let [dataj (json-str data)](send! chan dataj)))))))
+
 
 
 (defroutes all-routes
