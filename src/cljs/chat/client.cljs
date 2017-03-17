@@ -12,16 +12,21 @@
 
 (def ws (js/WebSocket. "ws://localhost:3000/ws"))
 
-(defn append-message [msg] (append! (by-id "history") (html [:div msg])) )
+;(defn append-message [msg] (append! (by-id "history") (html [:div msg])) )
 
+(defn append-message [e]
+  (let [ msgs (.-msg (.parse js/JSON (.-data e)))
+        author (.-author (.parse js/JSON (.-data e)))]
+    (append! (by-id "history") (html [:div author " => " msgs]))))
 
 ;aset => set property. (set! (.-property obj) value)
 (aset ws "onerror" (fn [](.log js/console  "error")))
 (aset ws "onopen" (fn [e] (.log js/console "websocket open!") ))
 (aset ws "onclose" (fn [e] (.log js/console "Error occurred")))
-;(aset ws "onmessage" (fn [e]  (append-message (aget e "data"))))
-(aset ws "onmessage" (fn [e]   (let [msgs  (.parse js/JSON (.-data e))] (append-message  msgs))))
-;(aset ws "onmessage" (fn [e]   (let [msgs (.-msg (.parse js/JSON (.-data e)))] (append-message  msgs)))) not working
+(aset ws "onmessage" (fn [e]  (append-message e)))
+;(aset ws "onmessage" (fn [e]   (let [msgs  (.parse js/JSON (.-data e))] (append-message  msgs))))
+;(aset ws "onmessage" (fn [e]   (let [msgs (.-msg (.parse js/JSON (.-data e)))] (append-message  msgs))))
+
 
 ; (defn server-message []
 ; (let [name (value (by-id "name"))

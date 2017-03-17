@@ -43,7 +43,7 @@
               (on-close channel (fn [status] (println "channel closed: " status)))
                (on-receive channel(fn [data]  (doseq [chan @channels]
                                                       (println data)
-                                                      (let [dataj (json-str data)](send! chan dataj)))))))
+                                                      (let [dataj  data](send! chan dataj)))))))
 
 
 
