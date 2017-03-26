@@ -1,11 +1,13 @@
 (ns chat.client
   (:require [domina.core :refer [append!
                                  by-id
+                                 by-class
                                  set-value!
                                  destroy!
                                  value]]
             [domina.events :refer [listen!]]
             [hiccups.runtime]
+            [cljs-http.client :as http]
             [cognitect.transit :as t]
             )
             (:require-macros [hiccups.core :refer [html]]))
@@ -17,13 +19,15 @@
 (defn append-message [e]
   (let [ msgs (.-msg (.parse js/JSON (.-data e)))
         author (.-author (.parse js/JSON (.-data e)))]
-    (append! (by-id "history") (html [:div author " => " msgs]))))
+    (append! (by-id "history") (html [:div {:class "mes"} "Author: " author " Message: " msgs]))
+    (listen! (by-class "mes") :click (fn[] (http/post "http://localhost:3000/ban" {:query-params {:user author}})) )))
 
 ;aset => set property. (set! (.-property obj) value)
 (aset ws "onerror" (fn [](.log js/console  "error")))
 (aset ws "onopen" (fn [e] (.log js/console "websocket open!") ))
 (aset ws "onclose" (fn [e] (.log js/console "Error occurred")))
-(aset ws "onmessage" (fn [e]  (append-message e)))
+(aset ws "onmessage" (fn [evt]  (do (.log js/console "event: "evt "and data is" (.-data evt))(append-message evt))))
+
 ;(aset ws "onmessage" (fn [e]   (let [msgs  (.parse js/JSON (.-data e))] (append-message  msgs))))
 ;(aset ws "onmessage" (fn [e]   (let [msgs (.-msg (.parse js/JSON (.-data e)))] (append-message  msgs))))
 

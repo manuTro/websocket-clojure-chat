@@ -14,13 +14,16 @@
                  [com.cemerick/piggieback "0.2.1"]     ;; needed by bREPL
                  [weasel "0.7.0"]
                  [hiccup "1.0.5"]
-                 [http-kit "2.2.0"]                   ;; needed by bREPL
+                 [http-kit "2.2.0"]
+                 [cljs-http "0.1.42"]
+                                 ;; needed by bREPL
                  [org.clojure/tools.nrepl "0.2.12"]    ;; needed by bREPL
                  [org.clojars.magomimmo/domina "2.0.0-SNAPSHOT"]
                  [hiccups "0.3.0"]
                  [compojure "1.5.2"]
                  [com.taoensso/timbre "4.8.0"]
                  [ring/ring-defaults "0.2.1"]
+                 [ring/ring-core "1.5.0"]
                  [org.clojure/tools.logging "0.3.1"]
                  [com.cognitect/transit-cljs "0.8.239"]
                  [org.clojure/data.json "0.2.6"]              ;; for routing
